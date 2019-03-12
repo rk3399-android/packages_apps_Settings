@@ -35,6 +35,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.support.annotation.VisibleForTesting;
@@ -821,6 +822,15 @@ public class SettingsActivity extends SettingsDrawerActivity
         somethingChanged = setTileEnabled(new ComponentName(packageName,
                         Settings.ConnectedDeviceDashboardActivity.class.getName()),
                 !UserManager.isDeviceInDemoMode(this), isAdmin)
+                || somethingChanged;
+
+        somethingChanged = setTileEnabled(new ComponentName(packageName,
+                        Settings.ScreenshotSettingsActivity.class.getName()),
+                SystemProperties.get("ro.build.characteristics","null").equals("tablet"), isAdmin) || somethingChanged;
+
+        somethingChanged = setTileEnabled(new ComponentName(packageName,
+                        Settings.HdmiSettingsActivity.class.getName()),
+                "true".equals(SystemProperties.get("ro.rk.hdmisetting")), isAdmin)
                 || somethingChanged;
 
         somethingChanged = setTileEnabled(new ComponentName(packageName,

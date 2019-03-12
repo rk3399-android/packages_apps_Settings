@@ -97,7 +97,8 @@
             android:allowBackup="false"
             android:usesCleartextTraffic="true"
             android:defaultToDeviceProtectedStorage="true"
-            android:directBootAware="true">
+            android:directBootAware="true"
+            android:name=".SettingsApplication">
 
         <!-- Settings -->
 
@@ -477,6 +478,30 @@
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
                 android:value="com.android.settings.TetherSettings" />
         </activity-alias>
+
+        <activity android:name="Settings$EthernetSettingsActivity"
+                android:label="@string/ethernet_settings_title"
+                android:icon="@drawable/ic_settings_wireless"
+                android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.EthernetSettings" />
+        </activity>
+
+        <!-- Keep compatibility with old shortcuts. -->
+         <activity-alias android:name=".EthernetSettings"
+                android:label="@string/ethernet_settings"
+                android:clearTaskOnLaunch="true"
+                android:targetActivity="Settings$EthernetSettingsActivity"
+                android:exported="true">
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.EthernetSettings" />
+         </activity-alias>
 
         <activity android:name="Settings$WifiP2pSettingsActivity"
                 android:taskAffinity="com.android.settings"
@@ -1858,30 +1883,38 @@
                 android:exported="true"
                 android:permission="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
         <activity android:name=".deviceinfo.StorageWizardFormatConfirm"
+                android:theme="@style/SuwThemeMaterial.Light"
                 android:taskAffinity="com.android.settings.storage_wizard"
                 android:exported="false" />
         <activity android:name=".deviceinfo.StorageWizardFormatProgress"
+                android:theme="@style/SuwThemeMaterial.Light"
                 android:taskAffinity="com.android.settings.storage_wizard"
                 android:exported="false" />
         <activity android:name=".deviceinfo.StorageWizardMigrate"
+                android:theme="@style/SuwThemeMaterial.Light"
                 android:taskAffinity="com.android.settings.storage_wizard"
                 android:exported="false" />
         <activity android:name=".deviceinfo.StorageWizardMigrateConfirm"
+                android:theme="@style/SuwThemeMaterial.Light"
                 android:taskAffinity="com.android.settings.storage_wizard"
                 android:exported="false" />
         <activity android:name=".deviceinfo.StorageWizardMigrateProgress"
+                android:theme="@style/SuwThemeMaterial.Light"
                 android:taskAffinity="com.android.settings.storage_wizard"
                 android:exported="true"
                 android:permission="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
         <activity android:name=".deviceinfo.StorageWizardReady"
+                android:theme="@style/SuwThemeMaterial.Light"
                 android:taskAffinity="com.android.settings.storage_wizard"
                 android:exported="true"
                 android:permission="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
         <activity android:name=".deviceinfo.StorageWizardMoveConfirm"
+                android:theme="@style/SuwThemeMaterial.Light"
                 android:taskAffinity="com.android.settings.storage_wizard"
                 android:exported="false" />
         <activity android:name=".deviceinfo.StorageWizardMoveProgress"
+                android:theme="@style/SuwThemeMaterial.Light"
                 android:taskAffinity="com.android.settings.storage_wizard"
                 android:exported="true"
                 android:permission="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
@@ -3282,6 +3315,47 @@
                 <data android:scheme="package" />
             </intent-filter>
         </activity>
+
+        <!-- SCREENSHOT -->
+        <activity
+            android:name=".Settings$ScreenshotSettingsActivity"
+            android:taskAffinity="com.android.settings"
+            android:label="@string/screenshot_manager"
+            android:icon="@drawable/ic_settings_screenshot"
+            android:parentActivityName="Settings">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+
+            <intent-filter android:priority="6">
+                <action android:name="com.android.settings.action.SETTINGS" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.homepage" />
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.ScreenshotSetting" />
+        </activity>
+
+        <!-- HDMI -->
+        <activity android:name="Settings$HdmiSettingsActivity"
+                android:label="@string/hdmi_settings"
+                android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.HdmiSettings" />
+                <meta-data android:name="com.android.settings.PRIMARY_PROFILE_CONTROLLED"
+                android:value="true" />
+        </activity>
+
+        <activity android:name="com.android.settings.display.ScreenScaleActivity"/>
 
         <!-- This is the longest AndroidManifest.xml ever. -->
     </application>

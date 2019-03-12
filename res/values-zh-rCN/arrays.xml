@@ -30,6 +30,7 @@
     <item msgid="8392017019801393511">"全部"</item>
   </string-array>
   <string-array name="screen_timeout_entries">
+    <item>"永不休眠"</item>
     <item msgid="3342301044271143016">"15秒"</item>
     <item msgid="8881760709354815449">"30秒"</item>
     <item msgid="7589406073232279088">"1分钟"</item>
@@ -477,5 +478,16 @@
     <item msgid="687318592238852312">"超过 30 天"</item>
     <item msgid="2900554746706302178">"超过 60 天"</item>
     <item msgid="5692284879054004388">"超过 90 天"</item>
+  </string-array>
+
+  <string-array name="screenshot_storage_location">
+    <item>内部存储器</item>
+    <item>SD卡存储器</item>
+    <item>USB存储器</item>
+  </string-array>
+  <string-array name="screenshot_strorage_location_values">
+    <item>flash</item>
+    <item>sdcard</item>
+    <item>usb</item>
   </string-array>
 </resources>

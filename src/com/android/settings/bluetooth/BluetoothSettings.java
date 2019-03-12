@@ -25,10 +25,12 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceGroup;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
@@ -142,6 +144,12 @@ public class BluetoothSettings extends DeviceListPreferenceFragment implements I
         super.onStart();
         // Always show paired devices regardless whether user-friendly name exists
         mShowDevicesWithoutNames = true;
+        if ("rk3126c".equals(SystemProperties.get("ro.board.platform"))) {
+            RecyclerView listView = (RecyclerView)getActivity().findViewById(com.android.settings.R.id.list);
+            if (null != listView) {
+                listView.setItemAnimator(null);
+            }
+        }
         if (isUiRestricted()) {
             getPreferenceScreen().removeAll();
             if (!isUiRestrictedByOnlyAdmin()) {
@@ -194,6 +202,7 @@ public class BluetoothSettings extends DeviceListPreferenceFragment implements I
                         R.string.bluetooth_preference_paired_devices,
                         BluetoothDeviceFilter.BONDED_DEVICE_FILTER, true);
                 mPairedDevicesCategory.addPreference(mPairingPreference);
+
                 updateFooterPreference(mFooterPreference);
 
                 if (mAlwaysDiscoverable != null) {

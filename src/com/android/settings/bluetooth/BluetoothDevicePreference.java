@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.SystemProperties;
 import android.os.UserManager;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceViewHolder;
@@ -58,6 +59,9 @@ public final class BluetoothDevicePreference extends GearPreference implements
     private DeviceListPreferenceFragment mDeviceListPreferenceFragment;
     /* Talk-back descriptions for various BT icons */
     Resources mResources;
+    private long mLastTime;
+    private boolean mIconLoaded;
+    private boolean mIsLowDevice;
 
     public BluetoothDevicePreference(Context context, CachedBluetoothDevice cachedDevice,
             DeviceListPreferenceFragment deviceListPreferenceFragment) {
@@ -74,6 +78,9 @@ public final class BluetoothDevicePreference extends GearPreference implements
 
         mCachedDevice = cachedDevice;
         mCachedDevice.registerCallback(this);
+        mIsLowDevice = "rk3126c".equals(SystemProperties.get("ro.board.platform"))
+            && null != deviceListPreferenceFragment
+            && deviceListPreferenceFragment instanceof BluetoothPairingDetail;
 
         onDeviceAttributesChanged();
     }
@@ -118,15 +125,28 @@ public final class BluetoothDevicePreference extends GearPreference implements
          * changed before proceeding. It will also call notifyChanged() if
          * any preference info has changed from the previous value.
          */
+        if (mIsLowDevice) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - mLastTime < 2000) {
+                return;
+            }
+            mLastTime = currentTime;
+        }
         setTitle(mCachedDevice.getName());
         // Null check is done at the framework
         setSummary(mCachedDevice.getConnectionSummary());
 
-        final Pair<Drawable, String> pair = Utils.getBtClassDrawableWithDescription(getContext(),
-                mCachedDevice);
-        if (pair.first != null) {
-            setIcon(pair.first);
-            contentDescription = pair.second;
+        if (mDeviceListPreferenceFragment instanceof BluetoothPairingDetail
+                && mIconLoaded && mIsLowDevice){
+
+        } else {
+            final Pair<Drawable, String> pair = Utils.getBtClassDrawableWithDescription(getContext(),
+                    mCachedDevice);
+            if (pair.first != null) {
+                setIcon(pair.first);
+                mIconLoaded = true;
+                contentDescription = pair.second;
+            }
         }
 
         // Used to gray out the item
@@ -138,13 +158,15 @@ public final class BluetoothDevicePreference extends GearPreference implements
                 || mCachedDevice.hasHumanReadableName());
 
         // This could affect ordering, so notify that
-        notifyHierarchyChanged();
+        if (!mIsLowDevice) {
+            notifyHierarchyChanged();
+        }
     }
 
     @Override
     public void onBindViewHolder(PreferenceViewHolder view) {
         // Disable this view if the bluetooth enable/disable preference view is off
-        if (null != findPreferenceInHierarchy("bt_checkbox")) {
+        if (!mIsLowDevice && null != findPreferenceInHierarchy("bt_checkbox")) {
             setDependency("bt_checkbox");
         }
 
@@ -178,7 +200,7 @@ public final class BluetoothDevicePreference extends GearPreference implements
 
     @Override
     public int compareTo(Preference another) {
-        if (!(another instanceof BluetoothDevicePreference)) {
+        if (mIsLowDevice || !(another instanceof BluetoothDevicePreference)) {
             // Rely on default sort
             return super.compareTo(another);
         }

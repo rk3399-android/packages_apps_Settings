@@ -1021,7 +1021,9 @@ public class WifiSettings extends RestrictedSettingsFragment
                 connect(mSelectedAccessPoint.getConfig(), true /* isSavedNetwork */);
             }
         } else if (configController.getMode() == WifiConfigUiBase.MODE_MODIFY) {
-            mWifiManager.save(config, mSaveListener);
+		//mWifiManager.save(config, mSaveListener);
+		mWifiManager.disconnect();
+		mWifiManager.connect(config, mSaveListener);
         } else {
             mWifiManager.save(config, mSaveListener);
             if (mSelectedAccessPoint != null) { // Not an "Add network"

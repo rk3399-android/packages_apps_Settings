@@ -99,6 +99,12 @@
                 android:summary="@string/accessibility_toggle_master_mono_summary"
                 android:persistent="false"/>
 
+        <SwitchPreference
+                android:key="toggle_force_hpout"
+                android:title="@string/accessibility_toggle_force_hpout_title"
+                android:summary="@string/accessibility_toggle_force_hpout_summary"
+                android:persistent="false"/>
+
         <Preference
                 android:fragment="com.android.settings.accessibility.CaptionPropertiesFragment"
                 android:key="captioning_preference_screen"

@@ -3156,6 +3156,49 @@
     <!-- Reset settings complete toast text [CHAR LIMIT=75] -->
     <string name="reset_network_complete_toast">Network settings have been reset</string>
 
+    <!-- Ethernet Settings -->
+    <string name="ethernet_settings_title">Ethernet</string>
+     <string name="ethernet_netmask_hint" translatable="false"> 255.255.255.0</string>
+     <!--string name="ethernet_info_getting">"getting IP info..."</string-->
+     <string name="ethernet_settings">Ethernet</string>
+     <string name="ethernet_connect">Connect</string>
+     <string name="ethernet_cancel">Cancel</string>
+    <!--Wireless controls screen, settings summary for the item tot ake you to the ethernet settings screen -->
+     <string name="ethernet_settings_summary">Manager ethernet</string>
+    <!-- ethernet hw address  -->
+     <string name="ethernet_hw_addr">MAC</string>
+     <!-- ethernet ip address  -->
+     <string name="ethernet_ip_addr">IP address</string>
+     <!-- ethernet netmask  -->
+     <string name="ethernet_netmask">netmask</string>
+     <!-- ethernet gateway  -->
+     <string name="ethernet_gateway">gateway</string>
+     <!-- ethernet dns1  -->
+     <string name="ethernet_dns1">dns1</string>
+     <!-- ethernet dns2 -->
+     <string name="ethernet_dns2">dns2</string>
+     <string name="category_ethernet">Static IP Setttings</string>
+     <string name="usedhcp">dhcp</string>
+     <string name="usestatic">static</string>
+     <string name="ethernet_use_static_ip">Use static IP</string>
+     <string name="ethernet_ip_address">IP address</string>
+     <string name="staticip_save">Save</string>
+     <string name="staticip_cancel">Cancel</string>
+     <string name="str_ok">OK</string>
+     <string name="str_cancel">Cancel</string>
+     <string name="str_about">Important</string>
+     <string name="str_mesg">Whether save Settings?</string>
+     <string name="save_failed">Save failed!</string>
+     <string name="ethernet_ip_settings_invalid_ip">Please type a valid IP address.</string>
+     <string name="eth_ip_settings_please_complete_settings">Please give complete static IP settings!</string>
+     <string name="ethernet_quick_toggle_title">Ethernet</string>
+     <!-- Ethernet settings check box summary for turning on ethernet -->
+     <string name="ethernet_quick_toggle_summary_off">Ethernet is disabled</string>
+     <!--Used as title on second screen after selecting Ethernet settings -->
+     <string name="ethernet_quick_toggle_summary_on">Ethernet is enabled</string>
+     <!--Used as title on second screen after selecting Ethernet settings -->
+     <string name="ethernet_mode_title">IP settings</string>
+     <string name="ethernet_info_getting">"getting IP info..."</string>
     <!-- Master Clear -->
     <!-- Button title to factory data reset the entire device -->
     <string name="master_clear_title">Erase all data (factory reset)</string>
@@ -4325,6 +4368,10 @@
         screen magnification on app transitions</string>
     <!-- Title for the accessibility preference to power button to end a call. [CHAR LIMIT=35] -->
     <string name="accessibility_power_button_ends_call_prerefence_title">Power button ends call</string>
+    <!-- Title for the accessibility preference for audio output. [CHAR LIMIT=35] -->
+    <string name="accessibility_toggle_force_hpout_title">Force audio output</string>
+    <!-- Summary for the accessibility preference for audio output. [CHAR LIMIT=50] -->
+    <string name="accessibility_toggle_force_hpout_summary">Playback audio forced to 3.5mm headset Jack</string>
     <!-- Title for the accessibility preference for enabling/disabling large icons for mouse/trackpad pointers. [CHAR LIMIT=35] -->
     <string name="accessibility_toggle_large_pointer_icon_title">Large mouse pointer</string>
     <!-- Title for the accessibility preference for master mono. [CHAR LIMIT=35] -->
@@ -9052,4 +9099,26 @@
 
     <!-- Note displayed when certain features are not available on low ram devices. [CHAR LIMIT=NONE] -->
     <string name="disabled_low_ram_device">This feature is not available on this device</string>
+
+	<string name="screen_never_timeout_summary">Never sleep</string>
+
+    <!--screenshot setting -->
+    <string name="app_name">ScreenshotManager</string>
+    <string name="screenshot_manager">Screenshot</string>
+    <string name="screenshot_delay_title">Select delay time to capture the screen </string>
+    <string name="screenshot_show">Show the screenshot button in the statusbar</string>
+    <string name="screenshot_version">Show the version of screenshot manager.</string>
+    <string name="screenshot_storage_title">Set the location of screenshot storage</string>
+    <string name="later">s later capture</string>
+    <string name="abc_on" >"Android bug collector"</string>
+    <string name="abc_on_summary" >"Log will be saved in /data/logs/"</string>
+
+    <!--hdmi settings-->
+    <string name="hdmi_settings">HDMI</string>
+    <string name="hdmi_title">Turn on HDMI</string>
+    <string name="hdmi_resolution_title">HDMI Resolution</string>
+    <string name="hdmi_screen_zoom">Screen Zoom</string>
+    <string name="hdmi_rotation">HDMI Rotation</string>
+    <string name="confirm_dialog_title">Save Confirm</string>
+    <string name="confirm_dialog_message">Will cancel it</string>
 </resources>

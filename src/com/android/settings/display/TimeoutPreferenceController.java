@@ -109,9 +109,20 @@ public class TimeoutPreferenceController extends AbstractPreferenceController im
         } else {
             final CharSequence timeoutDescription = getTimeoutDescription(
                     currentTimeout, entries, values);
-            summary = timeoutDescription == null
-                    ? ""
-                    : mContext.getString(R.string.screen_timeout_summary, timeoutDescription);
+            // summary = timeoutDescription == null
+           //         ? ""
+           //         : mContext.getString(R.string.screen_timeout_summary, timeoutDescription);
+            if(timeoutDescription == null)
+            {
+            summary = "";
+            }else{
+              if(currentTimeout>1800000)
+                {
+                  summary=preference.getContext().getString(R.string.screen_never_timeout_summary,timeoutDescription);
+                }else{
+                  summary=preference.getContext().getString(R.string.screen_timeout_summary,timeoutDescription);
+                }
+            }
         }
         preference.setSummary(summary);
     }

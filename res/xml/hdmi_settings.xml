@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/hdmi_resolution_entries"
+        android:entryValues="@array/hdmi_resolution_values"
+        android:key="hdmi_resolution"
+        android:persistent="true"
+        android:title="@string/hdmi_resolution_title" />
+
+    <Preference
+        android:key="hdmi_screen_zoom"
+        android:title="@string/hdmi_screen_zoom" />
+
+    <ListPreference
+        android:entries="@array/hdmi_rotation_entries"
+        android:entryValues="@array/hdmi_rotation_values"
+        android:key="hdmi_rotation"
+        android:title="@string/hdmi_rotation" />
+
+</PreferenceScreen>

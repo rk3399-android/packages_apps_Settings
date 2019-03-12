@@ -22,7 +22,9 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.support.annotation.VisibleForTesting;
+import android.support.v7.widget.RecyclerView;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
@@ -67,6 +69,12 @@ public class BluetoothPairingDetail extends DeviceListPreferenceFragment impleme
         super.onActivityCreated(savedInstanceState);
         mInitialScanStarted = false;
         mAlwaysDiscoverable = new AlwaysDiscoverable(getContext(), mLocalAdapter);
+        if ("rk3126c".equals(SystemProperties.get("ro.board.platform"))) {
+            RecyclerView listView = (RecyclerView)getActivity().findViewById(com.android.settings.R.id.list);
+            if (null != listView) {
+                listView.setItemAnimator(null);
+            }
+        }
     }
 
     @Override

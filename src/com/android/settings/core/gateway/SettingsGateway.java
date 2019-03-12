@@ -23,9 +23,11 @@ import com.android.settings.DateTimeSettings;
 import com.android.settings.DeviceAdminSettings;
 import com.android.settings.DeviceInfoSettings;
 import com.android.settings.DisplaySettings;
+import com.android.settings.HdmiSettings;
 import com.android.settings.IccLockSettings;
 import com.android.settings.MasterClear;
 import com.android.settings.PrivacySettings;
+import com.android.settings.ScreenshotSetting;
 import com.android.settings.SecuritySettings;
 import com.android.settings.Settings;
 import com.android.settings.TestingSettings;
@@ -141,6 +143,8 @@ public class SettingsGateway {
     public static final String[] ENTRY_FRAGMENTS = {
             WifiSettings.class.getName(),
             ConfigureWifiSettings.class.getName(),
+            ScreenshotSetting.class.getName(),
+            HdmiSettings.class.getName(),
             SavedAccessPointsWifiSettings.class.getName(),
             BluetoothSettings.class.getName(),
             SimSettings.class.getName(),
@@ -259,6 +263,7 @@ public class SettingsGateway {
             // Home page
             Settings.NetworkDashboardActivity.class.getName(),
             Settings.ConnectedDeviceDashboardActivity.class.getName(),
+            Settings.ScreenshotSettingsActivity.class.getName(),
             Settings.AppAndNotificationDashboardActivity.class.getName(),
             Settings.DisplaySettingsActivity.class.getName(),
             Settings.SoundSettingsActivity.class.getName(),
@@ -290,5 +295,7 @@ public class SettingsGateway {
             Settings.DateTimeSettingsActivity.class.getName(),
             Settings.DeviceInfoSettingsActivity.class.getName(),
             Settings.EnterprisePrivacySettingsActivity.class.getName(),
+            // Home page > Display
+            Settings.HdmiSettingsActivity.class.getName(),
     };
 }

@@ -41,6 +41,7 @@
 
     <!-- Display settings.  The delay in inactivity before the screen is turned off. These are shown in a list dialog. -->
     <string-array name="screen_timeout_entries">
+	    <item>Never sleep</item>
         <item>15 seconds</item>
         <item>30 seconds</item>
         <item>1 minute</item>
@@ -52,7 +53,8 @@
 
     <!-- Do not translate. -->
     <string-array name="screen_timeout_values" translatable="false">
-        <!-- Do not translate. -->
+         <item>2147483647</item>
+		<!-- Do not translate. -->
         <item>15000</item>
         <!-- Do not translate. -->
         <item>30000</item>
@@ -1038,4 +1040,73 @@
         <item>never</item>
     </string-array>
 
+    <!-- screenshot setting-->
+    <string-array name="screenshot_delay_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>180</item>
+        <item>240</item>
+        <item>300</item>
+    </string-array>
+    <string-array name="screenshot_delay_entries">
+        <item>15 seconds later</item>
+        <item>30 seconds later</item>
+        <item>1 minute later</item>
+        <item>2 minute later</item>
+        <item>3 minute later</item>
+        <item>4 minute later</item>
+        <item>5 minute later</item>
+    </string-array>
+
+    <string-array name="screenshot_storage_location">
+        <item>Internal Storage</item>
+        <item>SD Card</item>
+        <item>USB Storage</item>
+    </string-array>
+    <string-array name="screenshot_strorage_location_values">
+        <item>flash</item>
+        <item>sdcard</item>
+        <item>usb</item>
+    </string-array>
+
+    <!-- HDMI -->
+    <string-array name="hdmi_resolution_entries">
+        <item>1920x1080p-50Hz </item>
+        <item>1920x1080p-60Hz</item>
+        <item>1280x720p-50Hz</item>
+        <item>1280x720p-60Hz</item>
+        <item>720x576p-50Hz </item>
+        <item>720x480p-60Hz </item>
+    </string-array>
+    <string-array name="hdmi_resolution_values">
+        <item>1920x1080p-50\n</item>
+        <item>1920x1080p-60\n</item>
+        <item>1280x720p-50\n</item>
+        <item>1280x720p-60\n</item>
+        <item>720x576p-50\n</item>
+        <item>720x480p-60\n</item>
+    </string-array>
+    <string-array name="hdmi_rotation_entries">
+        <item>0</item>
+        <item>90</item>
+        <item>180</item>
+        <item>270</item>
+    </string-array>
+    <string-array name="hdmi_rotation_values">
+        <item>0</item>
+        <item>90</item>
+        <item>180</item>
+        <item>270</item>
+    </string-array>
+        <!--ethernet mode select -->
+    <string-array name="ethernet_mode_location">
+        <item>@string/usestatic</item>
+        <item>@string/usedhcp</item>
+    </string-array>
+    <string-array name="ethernet_mode_values">
+        <item>StaticIP</item>
+        <item>DHCP</item>
+    </string-array>
 </resources>

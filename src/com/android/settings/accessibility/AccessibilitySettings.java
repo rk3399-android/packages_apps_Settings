@@ -23,9 +23,12 @@ import android.content.Context;
 import android.content.pm.ServiceInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.AudioSystem;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
@@ -97,6 +100,8 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
             "toggle_large_pointer_icon";
     private static final String TOGGLE_MASTER_MONO =
             "toggle_master_mono";
+    private static final String TOGGLE_FORCE_HPOUT =
+            "toggle_force_hpout";
     private static final String SELECT_LONG_PRESS_TIMEOUT_PREFERENCE =
             "select_long_press_timeout_preference";
     private static final String ACCESSIBILITY_SHORTCUT_PREFERENCE =
@@ -112,6 +117,9 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     private static final String DISPLAY_DALTONIZER_PREFERENCE_SCREEN =
             "daltonizer_preference_screen";
 
+    private static final String FORCE_HPOUT_ENABLE_PROPERTY =
+            "persist.audio.force.headset";
+
     // Extras passed to sub-fragments.
     static final String EXTRA_PREFERENCE_KEY = "preference_key";
     static final String EXTRA_CHECKED = "checked";
@@ -122,6 +130,8 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     static final String EXTRA_SETTINGS_COMPONENT_NAME = "settings_component_name";
     static final String EXTRA_VIDEO_RAW_RESOURCE_ID = "video_resource";
     static final String EXTRA_LAUNCHED_FROM_SUW = "from_suw";
+
+    private static AudioManager mAudioManager = null;
 
     // Timeout before we update the services if packages are added/removed
     // since the AccessibilityManagerService has to do that processing first
@@ -195,6 +205,7 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     private SwitchPreference mToggleLockScreenRotationPreference;
     private SwitchPreference mToggleLargePointerIconPreference;
     private SwitchPreference mToggleMasterMonoPreference;
+    private SwitchPreference mToggleForceHPOutPreference;
     private ListPreference mSelectLongPressTimeoutPreference;
     private Preference mNoServicesMessagePreference;
     private Preference mCaptioningPreferenceScreen;
@@ -305,6 +316,9 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
         } else if (mToggleMasterMonoPreference == preference) {
             handleToggleMasterMonoPreferenceClick();
             return true;
+        } else if (mToggleForceHPOutPreference == preference) {
+            handleToggleForceHPOutPreferenceClick();
+            return true;
         }
         return super.onPreferenceTreeClick(preference);
     }
@@ -337,6 +351,22 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
     private void handleToggleMasterMonoPreferenceClick() {
         Settings.System.putIntForUser(getContentResolver(), Settings.System.MASTER_MONO,
                 mToggleMasterMonoPreference.isChecked() ? 1 : 0, UserHandle.USER_CURRENT);
+    }
+
+    private void handleToggleForceHPOutPreferenceClick() {
+        boolean force_on = mToggleForceHPOutPreference.isChecked();
+
+        SystemProperties.set(FORCE_HPOUT_ENABLE_PROPERTY, force_on ? "true" : "false");
+
+        Context context = getActivity();
+        if (context != null) {
+            if (mAudioManager == null)
+                mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+            // Update audio routes
+            mAudioManager.setWiredDeviceConnectionState(AudioSystem.DEVICE_OUT_WIRED_HEADSET,
+                    force_on ? AudioSystem.DEVICE_STATE_AVAILABLE : 0, "", "");
+        }
     }
 
     private void initializeAllPreferences() {
@@ -377,6 +407,10 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
         // Master Mono
         mToggleMasterMonoPreference =
                 (SwitchPreference) findPreference(TOGGLE_MASTER_MONO);
+
+        // Force audio output
+        mToggleForceHPOutPreference =
+                (SwitchPreference) findPreference(TOGGLE_FORCE_HPOUT);
 
         // Long press timeout.
         mSelectLongPressTimeoutPreference =
@@ -607,6 +641,9 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
         // Master mono
         updateMasterMono();
 
+        // Force audio output
+        updateForceHPOut();
+
         // Long press timeout.
         final int longPressTimeout = Settings.Secure.getInt(getContentResolver(),
                 Settings.Secure.LONG_PRESS_TIMEOUT, mLongPressTimeoutDefault);
@@ -691,6 +728,15 @@ public class AccessibilitySettings extends SettingsPreferenceFragment implements
                 getContentResolver(), Settings.System.MASTER_MONO,
                 0 /* default */, UserHandle.USER_CURRENT) == 1;
         mToggleMasterMonoPreference.setChecked(masterMono);
+    }
+
+    private void updateForceHPOut() {
+        String forceHPOut = SystemProperties.get(FORCE_HPOUT_ENABLE_PROPERTY, "false");
+        if ("disabled".equals(forceHPOut)) {
+            mToggleForceHPOutPreference.setEnabled(false);
+        } else {
+            mToggleForceHPOutPreference.setChecked("true".equals(forceHPOut));
+        }
     }
 
     private void updateAccessibilityShortcut(Preference preference) {

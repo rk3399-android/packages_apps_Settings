@@ -134,6 +134,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private static final String LOCAL_BACKUP_PASSWORD = "local_backup_password";
     private static final String HARDWARE_UI_PROPERTY = "persist.sys.ui.hw";
     private static final String MSAA_PROPERTY = "debug.egl.force_msaa";
+    private static final String ABC_ON = "abc_on";
     private static final String OPENGL_TRACES_PROPERTY = "debug.egl.trace";
     private static final String TUNER_UI_KEY = "tuner_ui";
     private static final String COLOR_TEMPERATURE_PROPERTY = "persist.sys.debug.color_temp";
@@ -267,6 +268,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private EnableAdbPreferenceController mEnableAdbController;
     private Preference mClearAdbKeys;
     private SwitchPreference mEnableTerminal;
+    private RestrictedSwitchPreference mAbcOn;
     private RestrictedSwitchPreference mKeepScreenOn;
     private SwitchPreference mBtHciSnoopLog;
     private RestrictedSwitchPreference mEnableOemUnlock;
@@ -443,6 +445,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         mCameraLaserSensorController.displayPreference(getPreferenceScreen());
 
         mKeepScreenOn = (RestrictedSwitchPreference) findAndInitSwitchPref(KEEP_SCREEN_ON);
+        mAbcOn = (RestrictedSwitchPreference) findAndInitSwitchPref(ABC_ON);
         mBtHciSnoopLog = findAndInitSwitchPref(BT_HCI_SNOOP_LOG);
         mEnableOemUnlock = (RestrictedSwitchPreference) findAndInitSwitchPref(ENABLE_OEM_UNLOCK);
         if (!showEnableOemUnlockPreference(getActivity())) {
@@ -797,6 +800,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         mHaveDebugSettings |= mCameraLaserSensorController.updatePreference();
         updateSwitchPreference(mKeepScreenOn, Settings.Global.getInt(cr,
                 Settings.Global.STAY_ON_WHILE_PLUGGED_IN, 0) != 0);
+        updateSwitchPreference(mAbcOn,(SystemProperties.getInt("persist.sys.abc_switch",0)) != 0);
         updateSwitchPreference(mBtHciSnoopLog, SystemProperties.getBoolean(
                 BLUETOOTH_BTSNOOP_ENABLE_PROPERTY, false));
         updateSwitchPreference(mDebugViewAttributes, Settings.Global.getInt(cr,
@@ -2490,7 +2494,17 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
                     mKeepScreenOn.isChecked() ?
                             (BatteryManager.BATTERY_PLUGGED_AC | BatteryManager.BATTERY_PLUGGED_USB
                                     | BatteryManager.BATTERY_PLUGGED_WIRELESS) : 0);
-        } else if (preference == mBtHciSnoopLog) {
+        } else if (preference == mAbcOn) {
+            if(SystemProperties.getInt("persist.sys.abc_switch",0) == 1){
+                Log.d(TAG, "set persist.sys.abc_switch 0");
+                mAbcOn.setChecked(false);
+                SystemProperties.set("persist.sys.abc_switch","0");
+            }else{
+                Log.d(TAG, "set persist.sys.abc_switch 1");
+                mAbcOn.setEnabled(true);
+                SystemProperties.set("persist.sys.abc_switch","1");
+            }
+         } else if (preference == mBtHciSnoopLog) {
             writeBtHciSnoopLogOptions();
         } else if (preference == mEnableOemUnlock && mEnableOemUnlock.isEnabled()) {
             if (mEnableOemUnlock.isChecked()) {

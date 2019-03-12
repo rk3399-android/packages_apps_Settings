@@ -28,6 +28,7 @@ import com.android.settings.EncryptionAndCredential;
 import com.android.settings.LegalSettings;
 import com.android.settings.R;
 import com.android.settings.ScreenPinningSettings;
+import com.android.settings.ScreenshotSetting;
 import com.android.settings.SecuritySettings;
 import com.android.settings.accessibility.AccessibilitySettings;
 import com.android.settings.accessibility.AccessibilityShortcutPreferenceFragment;
@@ -198,6 +199,9 @@ public final class SearchIndexableResources {
         addIndex(StorageDashboardFragment.class, NO_DATA_RES_ID, R.drawable.ic_settings_storage);
         addIndex(ConnectedDeviceDashboardFragment.class, NO_DATA_RES_ID,
                 R.drawable.ic_devices_other);
+        addIndex(ScreenshotSetting.class,
+                R.xml.screenshot,
+                R.drawable.ic_settings_screenshot);
         addIndex(EnterprisePrivacySettings.class, NO_DATA_RES_ID, R.drawable.ic_settings_about);
         addIndex(PaymentSettings.class, NO_DATA_RES_ID, R.drawable.ic_settings_nfc_payment);
         addIndex(
